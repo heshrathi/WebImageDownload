@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
                 InputStream in = httpURLConnection.getInputStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(in);
+
+                Log.i("Image:", "Image Background Running!");
 
                 return bitmap;
 
@@ -80,12 +83,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Log.i("Button:", "Tapped!");
+
                 LoadImage loadImage = new LoadImage();
                 Bitmap image = null;
 
                 try {
-                    loadImage.execute("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrDZRK-C1iTTrghgRElEqNQ0XZUJ7fxqLlTQ&usqp=CAU").get();
+                    image = loadImage.execute("https://image.pngaaa.com/493/5593493-middle.png").get();
+//                    image = loadImage.execute(urlText).get();
                     imageView.setImageBitmap(image);
+                    Log.i("Image Loading:", "Successful.");
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
